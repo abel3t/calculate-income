@@ -33,7 +33,7 @@ export default function Home() {
   }
 
   const handleClick = () => {
-    const [first, last] = command.split(" ");
+    const [first, last] = command.split(":");
     const order = parseInt(first);
     const amount = parseInt(last);
     const amounts = data[order - 1]?.amounts || [];
@@ -98,7 +98,7 @@ const Card = ({ amounts, order }: { amounts: number[]; order: number }) => {
       </div>
 
 
-      <div className="flex flex-col pb-2 overflow-auto h-64">
+      <div className="flex flex-col pb-2 overflow-auto h-64 ">
         <div className="flex flex-col pb-2 overflow-auto">
           <div
             className="relative flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100"
