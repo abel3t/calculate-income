@@ -112,7 +112,7 @@ const Card = ({ amounts, order }: { amounts: number[]; order: number }) => {
         <span className="block text-sm font-semibold">{order}</span>
       </div>
 
-      <div className="flex flex-col pb-2 overflow-auto h-64 ">
+      <div className="flex flex-col pb-2 overflow-auto h-72">
         <div className="flex flex-col pb-2 overflow-auto">
           <div className="relative flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100">
             <h4 className="mt-3 text-sm font-medium">
