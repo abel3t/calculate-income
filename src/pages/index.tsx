@@ -41,7 +41,7 @@ export default function Home() {
     const amount = parseInt(last);
     const amounts = data[order - 1]?.amounts || [];
 
-    if (!order || !amount) {
+    if (!order || order <= 0 || order > 7 || !amount) {
       alert("Đã xảy ra lỗi, vui lòng thử lại");
       setCommand("");
       return;
@@ -58,11 +58,10 @@ export default function Home() {
       }
     });
 
+    localStorage.setItem("data", JSON.stringify(newData));
     setData(newData);
 
     setCommand("");
-
-    localStorage.setItem(data, JSON.stringify(data));
   };
 
   return (
@@ -70,7 +69,7 @@ export default function Home() {
       <div className="flex flex-col w-screen h-screen overflow-auto text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
         <div className="flex items-center flex-shrink-0 w-full h-16 px-10 bg-white bg-opacity-75">
           <input
-            className="flex items-center h-10 w-24 px-4 text-sm bg-gray-200 rounded-full focus:outline-none focus:ring"
+            className="flex items-center h-10 w-24 px-4 text-sm bg-gray-200 rounded-lg focus:outline-none focus:ring"
             type="search"
             placeholder="1:100"
             autoFocus
@@ -79,11 +78,19 @@ export default function Home() {
             onKeyDown={handlePresKey}
           />
 
-          <button type="button" className="ml-3 bg-blue-400 px-2 border rounded-md" onClick={handleClick}>
+          <button
+            type="button"
+            className="ml-3 bg-blue-400 px-2 py-1 border rounded-md"
+            onClick={handleClick}
+          >
             Ok
           </button>
 
-          <button type="button" className="ml-5 bg-gray-400 px-2 border rounded-md" onClick={handleReset}>
+          <button
+            type="button"
+            className="ml-5 bg-gray-400 px-2 py-1 border rounded-md"
+            onClick={handleReset}
+          >
             Reset
           </button>
         </div>
