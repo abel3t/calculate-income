@@ -59,12 +59,12 @@ export default function Home() {
 
   return (
     <main
-      className={`flex min-h-screen flex-col items-center justify-between`}
+      className={`flex min-h-screen`}
     >
       <div className="flex flex-col w-screen h-screen overflow-auto text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
         <div className="flex items-center flex-shrink-0 w-full h-16 px-10 bg-white bg-opacity-75">
           <input
-            className="flex items-center h-10 px-4 ml-10 text-sm bg-gray-200 rounded-full focus:outline-none focus:ring"
+            className="flex items-center h-10 px-4 text-sm bg-gray-200 rounded-full focus:outline-none focus:ring"
             type="search"
             placeholder="nhap lenh"
             value={command}
@@ -80,7 +80,7 @@ export default function Home() {
           </button>
         </div>
 
-        <div className="flex flex-grow px-10 mt-4 space-x-6 overflow-auto">
+        <div className="flex flex-grow px-2 mt-4 space-x-1 overflow-auto">
           {data.map((x: any) => (
             <Card key={x.order} {...x} />
           ))}
@@ -96,11 +96,12 @@ const Card = ({ amounts, order }: { amounts: number[]; order: number }) => {
       <div className="flex items-center flex-shrink-0 h-10 px-2">
         <span className="block text-sm font-semibold">{order}</span>
       </div>
-      <div className="flex flex-col pb-2 overflow-auto">
+
+
+      <div className="flex flex-col pb-2 overflow-auto h-64">
         <div className="flex flex-col pb-2 overflow-auto">
           <div
             className="relative flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100"
-            draggable="true"
           >
             <h4 className="mt-3 text-sm font-medium">
               {amounts.map((amount, index) => (
@@ -110,6 +111,7 @@ const Card = ({ amounts, order }: { amounts: number[]; order: number }) => {
           </div>
         </div>
       </div>
+
 
       <div className="flex flex-col pb-2 overflow-auto">
         <div className="flex flex-col pb-2 overflow-auto">
