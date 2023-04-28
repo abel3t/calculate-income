@@ -5,9 +5,6 @@ export default function Home() {
   const [data, setData] = useState([] as any);
   const [command, setCommand] = useState("");
 
-  const cardRef: any = useRef<any | null>(null);
-
-
   useEffect(() => {
     const lsData = JSON.parse(localStorage.getItem("data") || "[] ");
 
@@ -56,18 +53,13 @@ export default function Home() {
       if (x.order !== order) {
         newData.push(x);
       } else {
-        const newCard = { order, amounts: amounts.concat(amount) };
+        const newCard = { order, amounts: [amount].concat(amounts) };
         newData.push(newCard);
       }
     });
 
     localStorage.setItem("data", JSON.stringify(newData));
-    setData(newData)
-
-    console.log( cardRef.current)
-    
-
-    cardRef.current?.scrollIntoView({ behavior: 'smooth'}),
+    setData(newData);
 
     setCommand("");
   };
@@ -105,7 +97,7 @@ export default function Home() {
 
         <div className="flex flex-grow px-2 mt-4 space-x-1 overflow-auto">
           {data.map((x: any) => (
-            <Card key={x.order} {...x} cardRef={cardRef} />
+            <Card key={x.order} {...x} />
           ))}
         </div>
       </div>
@@ -113,7 +105,7 @@ export default function Home() {
   );
 }
 
-const Card = ({ amounts, order, cardRef }: { amounts: number[]; order: number, cardRef: any }) => {
+const Card = ({ amounts, order }: { amounts: number[]; order: number }) => {
   return (
     <div className="card flex flex-col flex-shrink-0 w-16">
       <div className="flex  h-10 px-2">
@@ -133,14 +125,13 @@ const Card = ({ amounts, order, cardRef }: { amounts: number[]; order: number, c
                   "text-red-400": amount < 0,
                   "text-yellow-400": !amount,
                 })}
-                ref={cardRef}
                 key={index}
               >
                 {amount}
               </div>
             ))}
           </h4>
-          </div>
+        </div>
       </div>
 
       <div className="flex flex-col pb-2 overflow-auto">
