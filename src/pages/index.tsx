@@ -108,8 +108,11 @@ export default function Home() {
 const Card = ({ amounts, order }: { amounts: number[]; order: number }) => {
   return (
     <div className="flex flex-col flex-shrink-0 w-16">
-      <div className="flex items-center flex-shrink-0 h-10 px-2">
+      <div className="flex  h-10 px-2">
         <span className="block text-sm font-semibold">{order}</span>
+        <span className="block ml-2 text-sm font-semibold">
+          <SummaryAmount amounts={amounts} />
+        </span>
       </div>
 
       <div className="flex flex-col pb-2 overflow-auto h-72">
@@ -149,9 +152,9 @@ const SummaryAmount = ({ amounts }: { amounts: any }) => {
   return (
     <h4
       className={classNames({
-        "mt-3 text-sm font-medium text-green-400": sumAmount > 0,
-        "mt-3 text-sm font-medium text-red-400": sumAmount < 0,
-        "mt-3 text-sm font-medium text-yellow-400": !sumAmount,
+        "text-sm font-medium text-green-400": sumAmount > 0,
+        "text-sm font-medium text-red-400": sumAmount < 0,
+        "text-sm font-medium text-yellow-400": !sumAmount,
       })}
     >
       {sumAmount}
