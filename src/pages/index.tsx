@@ -1,8 +1,5 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
-
-const inter = Inter({ subsets: ["latin"] });
+import classNames from "classnames";
 
 export default function Home() {
   const [data, setData] = useState([] as any);
@@ -30,19 +27,25 @@ export default function Home() {
     localStorage.clear();
 
     location.reload();
-  }
+  };
 
   const handlePresKey = (event: any) => {
-    if (event?.key === 'Enter') {
-      console.log('enter')
+    if (event?.key === "Enter") {
+      handleClick();
     }
-  }
+  };
 
   const handleClick = () => {
     const [first, last] = command.split(":");
     const order = parseInt(first);
     const amount = parseInt(last);
     const amounts = data[order - 1]?.amounts || [];
+
+    if (!order || !amount) {
+      alert("Đã xảy ra lỗi, vui lòng thử lại");
+      setCommand("");
+      return;
+    }
 
     const newData: any = [];
 
@@ -53,8 +56,7 @@ export default function Home() {
         const newCard = { order, amounts: amounts.concat(amount) };
         newData.push(newCard);
       }
-    })
-
+    });
 
     setData(newData);
 
@@ -64,9 +66,7 @@ export default function Home() {
   };
 
   return (
-    <main
-      className={`flex min-h-screen`}
-    >
+    <main className={`flex min-h-screen`}>
       <div className="flex flex-col w-screen h-screen overflow-auto text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
         <div className="flex items-center flex-shrink-0 w-full h-16 px-10 bg-white bg-opacity-75">
           <input
@@ -105,34 +105,49 @@ const Card = ({ amounts, order }: { amounts: number[]; order: number }) => {
         <span className="block text-sm font-semibold">{order}</span>
       </div>
 
-
       <div className="flex flex-col pb-2 overflow-auto h-64 ">
         <div className="flex flex-col pb-2 overflow-auto">
-          <div
-            className="relative flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100"
-          >
+          <div className="relative flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100">
             <h4 className="mt-3 text-sm font-medium">
               {amounts.map((amount, index) => (
-                <div key={index}>{amount}</div>
+                <div
+                  className={classNames({
+                    "text-green-400": amount > 0,
+                    "text-red-400": amount < 0,
+                    "text-yellow-400": !amount,
+                  })}
+                  key={index}
+                >
+                  {amount}
+                </div>
               ))}
             </h4>
           </div>
         </div>
       </div>
 
-
       <div className="flex flex-col pb-2 overflow-auto">
         <div className="flex flex-col pb-2 overflow-auto">
-          <div
-            className="relative flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100"
-          >
-            <h4 className="mt-3 text-sm font-medium">
-              {amounts.reduce((curr, acc) => acc + curr, 0)}
-            </h4>
+          <div className="relative flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100">
+            <SummaryAmount amounts={amounts} />
           </div>
         </div>
       </div>
-
     </div>
+  );
+};
+
+const SummaryAmount = ({ amounts }: { amounts: any }) => {
+  const sumAmount = amounts.reduce((curr: any, acc: any) => acc + curr, 0);
+  return (
+    <h4
+      className={classNames({
+        "mt-3 text-sm font-medium text-green-400": sumAmount > 0,
+        "mt-3 text-sm font-medium text-red-400": sumAmount < 0,
+        "mt-3 text-sm font-medium text-yellow-400": !sumAmount,
+      })}
+    >
+      {sumAmount}
+    </h4>
   );
 };
