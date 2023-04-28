@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import classNames from "classnames";
 
 export default function Home() {
   const [data, setData] = useState([] as any);
   const [command, setCommand] = useState("");
+
+  const cardRef: any = useRef<any | null>(null);
+
 
   useEffect(() => {
     const lsData = JSON.parse(localStorage.getItem("data") || "[] ");
@@ -59,7 +62,12 @@ export default function Home() {
     });
 
     localStorage.setItem("data", JSON.stringify(newData));
-    setData(newData);
+    setData(newData)
+
+    console.log( cardRef.current)
+    
+
+    cardRef.current?.scrollIntoView({ behavior: 'smooth'}),
 
     setCommand("");
   };
@@ -72,7 +80,7 @@ export default function Home() {
             className="flex items-center h-10 w-24 px-4 text-sm bg-gray-200 rounded-lg focus:outline-none focus:ring"
             type="search"
             placeholder="1:100"
-            autoFocus
+            autoFocus={true}
             value={command}
             onChange={(e) => setCommand(e.target?.value || "")}
             onKeyDown={handlePresKey}
@@ -97,7 +105,7 @@ export default function Home() {
 
         <div className="flex flex-grow px-2 mt-4 space-x-1 overflow-auto">
           {data.map((x: any) => (
-            <Card key={x.order} {...x} />
+            <Card key={x.order} {...x} cardRef={cardRef} />
           ))}
         </div>
       </div>
@@ -105,9 +113,9 @@ export default function Home() {
   );
 }
 
-const Card = ({ amounts, order }: { amounts: number[]; order: number }) => {
+const Card = ({ amounts, order, cardRef }: { amounts: number[]; order: number, cardRef: any }) => {
   return (
-    <div className="flex flex-col flex-shrink-0 w-16">
+    <div className="card flex flex-col flex-shrink-0 w-16">
       <div className="flex  h-10 px-2">
         <span className="block text-sm font-semibold">{order}</span>
         <span className="block ml-2 text-sm font-semibold">
@@ -115,25 +123,24 @@ const Card = ({ amounts, order }: { amounts: number[]; order: number }) => {
         </span>
       </div>
 
-      <div className="flex flex-col pb-2 overflow-auto h-72">
-        <div className="flex flex-col pb-2 overflow-auto">
-          <div className="relative flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100">
-            <h4 className="mt-3 text-sm font-medium">
-              {amounts.map((amount, index) => (
-                <div
-                  className={classNames({
-                    "text-green-400": amount > 0,
-                    "text-red-400": amount < 0,
-                    "text-yellow-400": !amount,
-                  })}
-                  key={index}
-                >
-                  {amount}
-                </div>
-              ))}
-            </h4>
+      <div className="flex flex-col pb-2 overflow-y-scroll h-72">
+        <div className="flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100">
+          <h4 className="mt-3 text-sm font-medium">
+            {amounts.map((amount, index) => (
+              <div
+                className={classNames({
+                  "text-green-400": amount > 0,
+                  "text-red-400": amount < 0,
+                  "text-yellow-400": !amount,
+                })}
+                ref={cardRef}
+                key={index}
+              >
+                {amount}
+              </div>
+            ))}
+          </h4>
           </div>
-        </div>
       </div>
 
       <div className="flex flex-col pb-2 overflow-auto">
