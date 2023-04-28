@@ -70,7 +70,7 @@ export default function Home() {
       <div className="flex flex-col w-screen h-screen overflow-auto text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
         <div className="flex items-center flex-shrink-0 w-full h-16 px-10 bg-white bg-opacity-75">
           <input
-            className="flex items-center h-10 px-4 text-sm bg-gray-200 rounded-full focus:outline-none focus:ring"
+            className="flex items-center h-10 w-24 px-4 text-sm bg-gray-200 rounded-full focus:outline-none focus:ring"
             type="search"
             placeholder="1:100"
             autoFocus
