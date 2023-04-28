@@ -32,6 +32,12 @@ export default function Home() {
     location.reload();
   }
 
+  const handlePresKey = (event: any) => {
+    if (event?.key === 'Enter') {
+      console.log('enter')
+    }
+  }
+
   const handleClick = () => {
     const [first, last] = command.split(":");
     const order = parseInt(first);
@@ -66,9 +72,11 @@ export default function Home() {
           <input
             className="flex items-center h-10 px-4 text-sm bg-gray-200 rounded-full focus:outline-none focus:ring"
             type="search"
-            placeholder="nhap lenh"
+            placeholder="1:100"
+            autoFocus
             value={command}
             onChange={(e) => setCommand(e.target?.value || "")}
+            onKeyDown={handlePresKey}
           />
 
           <button type="button" className="ml-3" onClick={handleClick}>
