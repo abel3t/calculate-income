@@ -79,11 +79,11 @@ export default function Home() {
             onKeyDown={handlePresKey}
           />
 
-          <button type="button" className="ml-3" onClick={handleClick}>
+          <button type="button" className="ml-3 bg-blue-400 px-2 border rounded-md" onClick={handleClick}>
             Ok
           </button>
 
-          <button type="button" className="ml-5" onClick={handleReset}>
+          <button type="button" className="ml-5 bg-gray-400 px-2 border rounded-md" onClick={handleReset}>
             Reset
           </button>
         </div>
