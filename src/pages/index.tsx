@@ -59,7 +59,7 @@ export default function Home() {
 
   return (
     <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
+      className={`flex min-h-screen flex-col items-center justify-between`}
     >
       <div className="flex flex-col w-screen h-screen overflow-auto text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
         <div className="flex items-center flex-shrink-0 w-full h-16 px-10 bg-white bg-opacity-75">
@@ -71,11 +71,11 @@ export default function Home() {
             onChange={(e) => setCommand(e.target?.value || "")}
           />
 
-          <button type="button" onClick={handleClick}>
+          <button type="button" className="ml-3" onClick={handleClick}>
             Ok
           </button>
 
-          <button type="button" className="ml-10" onClick={handleReset}>
+          <button type="button" className="ml-5" onClick={handleReset}>
             Reset
           </button>
         </div>
