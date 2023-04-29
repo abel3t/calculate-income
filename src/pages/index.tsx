@@ -127,7 +127,7 @@ const Card = ({
         </span>
       </div>
 
-      <div className="flex flex-col pb-2 overflow-y-scroll h-48">
+      <div className="flex flex-col pb-2 overflow-y-scroll h-72">
         <div className="flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100">
           <h4 className="mt-3 text-sm font-medium">
             {amounts.map((amount, index) => {
