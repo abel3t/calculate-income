@@ -63,14 +63,15 @@ export default function Home() {
     localStorage.setItem("data", JSON.stringify(newData));
     setData(newData);
 
-    cardRef.current?.scrollIntoView({ behavior: "smooth" });
+    cardRef.current?.scrollIntoView({ behavior: 'instant', block: 'start' });
 
     setCommand("");
   };
 
   return (
     <main className={`flex min-h-screen`}>
-      <div className="flex flex-col w-screen h-screen overflow-auto text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
+      <div className="flex flex-col w-screen h-screen text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200"
+      >
         <div className="flex items-center flex-shrink-0 w-full h-16 px-10 bg-white bg-opacity-75">
           <input
             className="flex items-center h-10 w-24 px-4 text-sm bg-gray-200 rounded-lg focus:outline-none focus:ring"
@@ -99,7 +100,7 @@ export default function Home() {
           </button>
         </div>
 
-        <div className="flex flex-grow px-2 mt-4 space-x-1 overflow-auto">
+        <div className="flex flex-grow px-2 mt-4 space-x-1 overflow-x-scroll">
           {data.map((x: any) => (
             <Card key={x.order} {...x} cardRef={cardRef} />
           ))}
@@ -128,7 +129,7 @@ const Card = ({
       </div>
 
       <div className="flex flex-col pb-2 overflow-y-scroll h-72">
-        <div className="flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100">
+        <div className="flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100" >
           <h4 className="mt-3 text-sm font-medium">
             {amounts.map((amount, index) => (
               <div
@@ -137,10 +138,11 @@ const Card = ({
                   "text-red-400": amount < 0,
                   "text-yellow-400": !amount,
                 })}
-                key={index}
                 ref={cardRef}
+                key={index}
               >
                 {amount}
+                
               </div>
             ))}
           </h4>
