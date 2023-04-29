@@ -63,7 +63,10 @@ export default function Home() {
     localStorage.setItem("data", JSON.stringify(newData));
     setData(newData);
 
-    cardRef.current?.scrollIntoView({ behavior: 'instant', block: 'start' });
+    window.scrollTo({top: 0, behavior: 'smooth'});
+
+    console.log(cardRef.current)
+    cardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     setCommand("");
   };
@@ -120,7 +123,11 @@ const Card = ({
   cardRef: any;
 }) => {
   return (
-    <div className="card flex flex-col flex-shrink-0 w-16">
+    <div
+     className="card flex flex-col flex-shrink-0 w-16"
+     ref={cardRef}
+     id={`card-${order}`}
+     >
       <div className="flex  h-10 px-2">
         <span className="block text-sm font-semibold">{order}</span>
         <span className="block ml-2 text-sm font-semibold">
@@ -138,7 +145,6 @@ const Card = ({
                   "text-red-400": amount < 0,
                   "text-yellow-400": !amount,
                 })}
-                ref={cardRef}
                 key={index}
               >
                 {amount}
