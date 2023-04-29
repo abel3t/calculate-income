@@ -127,7 +127,7 @@ const Card = ({
         </span>
       </div>
 
-      <div className="flex flex-col pb-2 overflow-y-scroll h-72">
+      <div className="flex flex-col pb-2 overflow-y-scroll h-48">
         <div className="flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100">
           <h4 className="mt-3 text-sm font-medium">
             {amounts.map((amount, index) => {
@@ -175,9 +175,9 @@ const SummaryAmount = ({ amounts }: { amounts: any }) => {
   return (
     <h4
       className={classNames({
-        "text-sm font-medium text-green-500": sumAmount > 0,
-        "text-sm font-medium text-red-500": sumAmount < 0,
-        "text-sm font-medium text-yellow-500": !sumAmount,
+        "text-sm font-medium text-green-600": sumAmount > 0,
+        "text-sm font-medium text-red-600": sumAmount < 0,
+        "text-sm font-medium text-yellow-600": !sumAmount,
       })}
     >
       {sumAmount}
