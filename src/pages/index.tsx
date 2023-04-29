@@ -65,7 +65,6 @@ export default function Home() {
       .getElementById(`card-${order}`)
       ?.scrollIntoView({
         behavior: "smooth",
-        block: "start",
         inline: "start",
       });
 
@@ -75,7 +74,7 @@ export default function Home() {
   return (
     <main className={`flex min-h-screen`}>
       <div className="flex flex-col w-screen h-screen text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
-        <div className="flex items-center flex-shrink-0 w-full h-16 px-10 bg-white bg-opacity-75 fixed">
+        <div className="flex items-center flex-shrink-0 w-full h-16 px-10 bg-white bg-opacity-75">
           <input
             className="flex items-center h-10 w-24 px-4 text-sm bg-gray-200 rounded-lg focus:outline-none focus:ring"
             type="search"
@@ -103,7 +102,7 @@ export default function Home() {
           </button>
         </div>
 
-        <div className="flex flex-grow px-2 mt-4 space-x-1 overflow-x-scroll mt-16 py-10">
+        <div className="flex flex-grow px-2 mt-4 space-x-1 overflow-x-scroll py-5">
           {data.map((x: any) => (
             <Card key={x.order} {...x} />
           ))}
