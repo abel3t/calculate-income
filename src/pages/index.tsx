@@ -100,7 +100,7 @@ export default function Home() {
         </button>
       </div>
 
-      <div className="flex flex-grow px-2 mt-2 space-x-1 overflow-x-scroll py-3">
+      <div className="flex flex-grow px-2 mt-2 space-x-2 overflow-x-scroll py-3">
         {data.map((x: any) => (
           <Card key={x.order} {...x} />
         ))}
@@ -118,8 +118,8 @@ const Card = ({
   cardRef: any;
 }) => {
   return (
-    <div className="card flex flex-col flex-shrink-0 w-12" id={`card-${order}`}>
-      <div className="flex  h-10 px-1">
+    <div className="card flex flex-col flex-shrink-0 w-14" id={`card-${order}`}>
+      <div className="flex h-10 px-1">
         <span className="block text-sm font-semibold">{order}</span>
         <span className="block ml-2 text-sm font-semibold">
           <SummaryAmount amounts={amounts} />
@@ -134,9 +134,9 @@ const Card = ({
                 return (
                   <div
                     className={classNames({
-                      "text-green-400": amount > 0,
-                      "text-red-400": amount < 0,
-                      "text-yellow-400": !amount,
+                      "text-green-500": amount > 0,
+                      "text-red-500": amount < 0,
+                      "text-yellow-500": !amount,
                     })}
                     key={index}
                   >
