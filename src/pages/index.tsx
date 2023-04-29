@@ -65,7 +65,7 @@ export default function Home() {
       .getElementById(`card-${order}`)
       ?.scrollIntoView({
         behavior: "smooth",
-        block: "nearest",
+        block: "start",
         inline: "start",
       });
 
