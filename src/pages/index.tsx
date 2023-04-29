@@ -5,6 +5,8 @@ export default function Home() {
   const [data, setData] = useState([] as any);
   const [command, setCommand] = useState("");
 
+  const cardRef: any = useRef<any | null>(null);
+
   useEffect(() => {
     const lsData = JSON.parse(localStorage.getItem("data") || "[] ");
 
@@ -61,6 +63,8 @@ export default function Home() {
     localStorage.setItem("data", JSON.stringify(newData));
     setData(newData);
 
+    cardRef.current?.scrollIntoView({ behavior: "smooth" });
+
     setCommand("");
   };
 
@@ -97,7 +101,7 @@ export default function Home() {
 
         <div className="flex flex-grow px-2 mt-4 space-x-1 overflow-auto">
           {data.map((x: any) => (
-            <Card key={x.order} {...x} />
+            <Card key={x.order} {...x} cardRef={cardRef} />
           ))}
         </div>
       </div>
@@ -105,7 +109,15 @@ export default function Home() {
   );
 }
 
-const Card = ({ amounts, order }: { amounts: number[]; order: number }) => {
+const Card = ({
+  amounts,
+  order,
+  cardRef,
+}: {
+  amounts: number[];
+  order: number;
+  cardRef: any;
+}) => {
   return (
     <div className="card flex flex-col flex-shrink-0 w-16">
       <div className="flex  h-10 px-2">
@@ -126,6 +138,7 @@ const Card = ({ amounts, order }: { amounts: number[]; order: number }) => {
                   "text-yellow-400": !amount,
                 })}
                 key={index}
+                ref={cardRef}
               >
                 {amount}
               </div>
