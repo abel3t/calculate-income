@@ -61,55 +61,51 @@ export default function Home() {
     localStorage.setItem("data", JSON.stringify(newData));
     setData(newData);
 
-    document
-      .getElementById(`card-${order}`)
-      ?.scrollIntoView({
-        block: "nearest",
-        behavior: "smooth",
-        inline: "start",
-      });
+    document.getElementById(`card-${order}`)?.scrollIntoView({
+      block: "nearest",
+      behavior: "smooth",
+      inline: "start",
+    });
 
     setCommand("");
   };
 
   return (
-    <main className={`flex min-h-screen`}>
-      <div className="flex flex-col w-screen h-screen text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
-        <div className="flex items-center flex-shrink-0 w-full h-16 px-10 bg-white bg-opacity-75">
-          <input
-            className="flex items-center h-10 w-24 px-4 text-sm bg-gray-200 rounded-lg focus:outline-none focus:ring"
-            type="search"
-            placeholder="1:100"
-            autoFocus={true}
-            value={command}
-            onChange={(e) => setCommand(e.target?.value || "")}
-            onKeyDown={handlePresKey}
-          />
+    <div className="flex flex-col w-screen text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
+      <div className="flex items-center flex-shrink-0 w-full h-16 px-10 bg-white bg-opacity-75">
+        <input
+          className="flex items-center h-10 w-24 px-4 text-sm bg-gray-200 rounded-lg focus:outline-none focus:ring"
+          type="search"
+          placeholder="1:100"
+          autoFocus={true}
+          value={command}
+          onChange={(e) => setCommand(e.target?.value || "")}
+          onKeyDown={handlePresKey}
+        />
 
-          <button
-            type="button"
-            className="ml-3 bg-blue-400 px-2 py-1 border rounded-md"
-            onClick={handleClick}
-          >
-            Ok
-          </button>
+        <button
+          type="button"
+          className="ml-3 bg-blue-400 px-2 py-1 border rounded-md"
+          onClick={handleClick}
+        >
+          Ok
+        </button>
 
-          <button
-            type="button"
-            className="ml-5 bg-gray-400 px-2 py-1 border rounded-md"
-            onClick={handleReset}
-          >
-            Reset
-          </button>
-        </div>
-
-        <div className="flex flex-grow px-2 mt-4 space-x-1 overflow-x-scroll py-5">
-          {data.map((x: any) => (
-            <Card key={x.order} {...x} />
-          ))}
-        </div>
+        <button
+          type="button"
+          className="ml-5 bg-gray-400 px-2 py-1 border rounded-md"
+          onClick={handleReset}
+        >
+          Reset
+        </button>
       </div>
-    </main>
+
+      <div className="flex flex-grow px-2 mt-2 space-x-1 overflow-x-scroll py-3">
+        {data.map((x: any) => (
+          <Card key={x.order} {...x} />
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -150,12 +146,8 @@ const Card = ({
         </div>
       </div>
 
-      <div className="flex flex-col pb-2 overflow-auto">
-        <div className="flex flex-col pb-2 overflow-auto">
-          <div className="relative flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100">
-            <SummaryAmount amounts={amounts} />
-          </div>
-        </div>
+      <div className="relative flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100">
+        <SummaryAmount amounts={amounts} />
       </div>
     </div>
   );
