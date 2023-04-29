@@ -5,8 +5,6 @@ export default function Home() {
   const [data, setData] = useState([] as any);
   const [command, setCommand] = useState("");
 
-  const cardRef: any = useRef<any | null>(null);
-
   useEffect(() => {
     const lsData = JSON.parse(localStorage.getItem("data") || "[] ");
 
@@ -63,18 +61,20 @@ export default function Home() {
     localStorage.setItem("data", JSON.stringify(newData));
     setData(newData);
 
-    window.scrollTo({top: 0, behavior: 'smooth'});
-
-    console.log(cardRef.current)
-    cardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document
+      .getElementById(`card-${order}`)
+      ?.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "start",
+      });
 
     setCommand("");
   };
 
   return (
     <main className={`flex min-h-screen`}>
-      <div className="flex flex-col w-screen h-screen text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200"
-      >
+      <div className="flex flex-col w-screen h-screen text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
         <div className="flex items-center flex-shrink-0 w-full h-16 px-10 bg-white bg-opacity-75">
           <input
             className="flex items-center h-10 w-24 px-4 text-sm bg-gray-200 rounded-lg focus:outline-none focus:ring"
@@ -105,7 +105,7 @@ export default function Home() {
 
         <div className="flex flex-grow px-2 mt-4 space-x-1 overflow-x-scroll">
           {data.map((x: any) => (
-            <Card key={x.order} {...x} cardRef={cardRef} />
+            <Card key={x.order} {...x} />
           ))}
         </div>
       </div>
@@ -123,11 +123,7 @@ const Card = ({
   cardRef: any;
 }) => {
   return (
-    <div
-     className="card flex flex-col flex-shrink-0 w-16"
-     ref={cardRef}
-     id={`card-${order}`}
-     >
+    <div className="card flex flex-col flex-shrink-0 w-16" id={`card-${order}`}>
       <div className="flex  h-10 px-2">
         <span className="block text-sm font-semibold">{order}</span>
         <span className="block ml-2 text-sm font-semibold">
@@ -136,7 +132,7 @@ const Card = ({
       </div>
 
       <div className="flex flex-col pb-2 overflow-y-scroll h-72">
-        <div className="flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100" >
+        <div className="flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100">
           <h4 className="mt-3 text-sm font-medium">
             {amounts.map((amount, index) => (
               <div
@@ -148,7 +144,6 @@ const Card = ({
                 key={index}
               >
                 {amount}
-                
               </div>
             ))}
           </h4>
