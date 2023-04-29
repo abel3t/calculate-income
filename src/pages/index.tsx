@@ -130,18 +130,35 @@ const Card = ({
       <div className="flex flex-col pb-2 overflow-y-scroll h-72">
         <div className="flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100">
           <h4 className="mt-3 text-sm font-medium">
-            {amounts.map((amount, index) => (
-              <div
-                className={classNames({
-                  "text-green-400": amount > 0,
-                  "text-red-400": amount < 0,
-                  "text-yellow-400": !amount,
-                })}
-                key={index}
-              >
-                {amount}
-              </div>
-            ))}
+            {amounts.map((amount, index) => {
+              if (index === 0) {
+                return (
+                  <div
+                    className={classNames({
+                      "text-green-400": amount > 0,
+                      "text-red-400": amount < 0,
+                      "text-yellow-400": !amount,
+                    })}
+                    key={index}
+                  >
+                    {amount}
+                  </div>
+                );
+              }
+
+              return (
+                <div
+                  className={classNames({
+                    "text-green-200": amount > 0,
+                    "text-red-200": amount < 0,
+                    "text-yellow-200": !amount,
+                  })}
+                  key={index}
+                >
+                  {amount}
+                </div>
+              );
+            })}
           </h4>
         </div>
       </div>
