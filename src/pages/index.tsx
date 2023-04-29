@@ -72,7 +72,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col w-screen text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
-      <div className="flex items-center flex-shrink-0 w-full h-16 px-10 bg-white bg-opacity-75">
+      <div className="fixed flex items-center flex-shrink-0 w-full h-16 px-10 bg-white bg-opacity-75">
         <input
           className="flex items-center h-10 w-24 px-4 text-sm bg-gray-200 rounded-lg focus:outline-none focus:ring"
           type="search"
@@ -100,7 +100,7 @@ export default function Home() {
         </button>
       </div>
 
-      <div className="flex flex-grow px-2 mt-2 space-x-2 overflow-x-scroll py-3">
+      <div className="flex flex-grow space-x-2 overflow-x-scroll">
         {data.map((x: any) => (
           <Card key={x.order} {...x} />
         ))}
@@ -118,7 +118,7 @@ const Card = ({
   cardRef: any;
 }) => {
   return (
-    <div className="card flex flex-col flex-shrink-0 w-14" id={`card-${order}`}>
+    <div className="card flex flex-col flex-shrink-0 w-14 py-20 px-2" id={`card-${order}`}>
       <div className="flex h-10 px-1">
         <span className="block text-sm font-semibold">{order}</span>
         <span className="block ml-2 text-sm font-semibold">
