@@ -100,7 +100,7 @@ export default function Home() {
         </button>
       </div>
 
-      <div className="flex flex-grow space-x-2 overflow-x-scroll">
+      <div className="flex flex-grow space-x-2 overflow-x-scroll px-4">
         {data.map((x: any) => (
           <Card key={x.order} {...x} />
         ))}
@@ -118,7 +118,7 @@ const Card = ({
   cardRef: any;
 }) => {
   return (
-    <div className="card flex flex-col flex-shrink-0 w-14 py-20 px-2" id={`card-${order}`}>
+    <div className="card flex flex-col flex-shrink-0 w-14 py-20" id={`card-${order}`}>
       <div className="flex h-10 px-1">
         <span className="block text-sm font-semibold">{order}</span>
         <span className="block ml-2 text-sm font-semibold">
