@@ -175,9 +175,9 @@ const SummaryAmount = ({ amounts }: { amounts: any }) => {
   return (
     <h4
       className={classNames({
-        "text-sm font-medium text-green-400": sumAmount > 0,
-        "text-sm font-medium text-red-400": sumAmount < 0,
-        "text-sm font-medium text-yellow-400": !sumAmount,
+        "text-sm font-medium text-green-500": sumAmount > 0,
+        "text-sm font-medium text-red-500": sumAmount < 0,
+        "text-sm font-medium text-yellow-500": !sumAmount,
       })}
     >
       {sumAmount}
