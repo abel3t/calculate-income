@@ -103,7 +103,7 @@ export default function Home() {
           </button>
         </div>
 
-        <div className="flex flex-grow px-2 mt-4 space-x-1 overflow-x-scroll mt-16 py-2">
+        <div className="flex flex-grow px-2 mt-4 space-x-1 overflow-x-scroll mt-16 py-10">
           {data.map((x: any) => (
             <Card key={x.order} {...x} />
           ))}
