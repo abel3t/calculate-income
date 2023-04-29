@@ -63,8 +63,8 @@ export default function Home() {
 
     document.getElementById(`card-${order}`)?.scrollIntoView({
       block: "nearest",
-      behavior: "smooth",
-      inline: "start",
+      behavior: "auto",
+      inline: "nearest",
     });
 
     setCommand("");
@@ -111,24 +111,23 @@ export default function Home() {
 
 const Card = ({
   amounts,
-  order,
-  cardRef,
+  order
 }: {
   amounts: number[];
   order: number;
   cardRef: any;
 }) => {
   return (
-    <div className="card flex flex-col flex-shrink-0 w-16" id={`card-${order}`}>
-      <div className="flex  h-10 px-2">
+    <div className="card flex flex-col flex-shrink-0 w-12" id={`card-${order}`}>
+      <div className="flex  h-10 px-1">
         <span className="block text-sm font-semibold">{order}</span>
         <span className="block ml-2 text-sm font-semibold">
           <SummaryAmount amounts={amounts} />
         </span>
       </div>
 
-      <div className="flex flex-col pb-2 overflow-y-scroll h-72">
-        <div className="flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100">
+      <div className="flex flex-col overflow-y-scroll h-72">
+        <div className="flex flex-col items-center p-1 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100">
           <h4 className="mt-3 text-sm font-medium">
             {amounts.map((amount, index) => {
               if (index === 0) {
@@ -163,7 +162,7 @@ const Card = ({
         </div>
       </div>
 
-      <div className="relative flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100">
+      <div className="relative flex flex-col items-center p-1 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100">
         <SummaryAmount amounts={amounts} />
       </div>
     </div>
