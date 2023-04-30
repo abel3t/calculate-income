@@ -4,6 +4,7 @@ import classNames from "classnames";
 export default function Home() {
   const [data, setData] = useState([] as any);
   const [command, setCommand] = useState("");
+  const MAX_CARDS = 10;
 
   useEffect(() => {
     const lsData = JSON.parse(localStorage.getItem("data") || "[] ");
@@ -12,7 +13,7 @@ export default function Home() {
       setData(lsData);
     } else {
       const initData = [];
-      for (let i = 0; i < 7; i++) {
+      for (let i = 0; i < MAX_CARDS; i++) {
         initData.push({
           order: i + 1,
           amounts: [],
@@ -41,7 +42,7 @@ export default function Home() {
     const amount = parseInt(last);
     const amounts = data[order - 1]?.amounts || [];
 
-    if (!order || order <= 0 || order > 7 || !amount) {
+    if (!order || order <= 0 || order > MAX_CARDS || !amount) {
       alert("Đã xảy ra lỗi, vui lòng thử lại");
       setCommand("");
       return;
