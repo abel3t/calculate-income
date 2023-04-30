@@ -148,9 +148,9 @@ const Card = ({
               return (
                 <div
                   className={classNames({
-                    "text-green-200": amount > 0,
-                    "text-red-200": amount < 0,
-                    "text-yellow-200": !amount,
+                    "text-green-400": amount > 0,
+                    "text-red-400": amount < 0,
+                    "text-yellow-400": !amount,
                   })}
                   key={index}
                 >
