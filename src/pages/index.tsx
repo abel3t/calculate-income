@@ -166,7 +166,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col w-screen text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
-      <div className="fixed flex items-center flex-shrink-0 w-full h-16 px-2 bg-white bg-opacity-75">
+      <div className="fixed flex items-center flex-shrink-0 w-full h-16 px-2 bg-white bg-opacity-75 overflow-x-scroll">
         <input
           className="h-10 w-24 px-4 text-sm bg-gray-200 rounded-lg focus:outline-none focus:ring"
           type="search"
