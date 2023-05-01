@@ -69,14 +69,13 @@ export default function Home() {
       return;
     }
 
-    let [strOrder, strAmount, strSide, strName] = command.split(":");
+    let [strOrder, strAmountSide, strName] = command.split(":");
     const order = parseInt(strOrder);
-    const amount = parseInt(strAmount);
+    const amount = parseInt(strAmountSide);
     const name = strName ? strName.trim() : undefined;
     const amounts = data[order - 1]?.amounts || [];
 
-    strSide = strSide?.toUpperCase();
-
+    const strSide = strAmountSide.slice(-1)?.toUpperCase();
     const amountType =
       strSide === "D" || strSide === "X" ? AmountType.Bet : AmountType.Normal;
 
