@@ -1,8 +1,25 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import classNames from "classnames";
 
+enum AmountType {
+  Normal,
+  Bet,
+}
+
+interface IAmount {
+  type: AmountType;
+  side?: string | undefined;
+  value: number;
+}
+
+interface ICard {
+  order: number;
+  name: string;
+  amounts: IAmount[];
+}
+
 export default function Home() {
-  const [data, setData] = useState([] as any);
+  const [data, setData] = useState([] as ICard[]);
   const [command, setCommand] = useState("");
   const MAX_CARDS = 10;
 
@@ -12,10 +29,11 @@ export default function Home() {
     if (lsData?.length) {
       setData(lsData);
     } else {
-      const initData = [];
+      const initData: ICard[] = [];
       for (let i = 0; i < MAX_CARDS; i++) {
         initData.push({
           order: i + 1,
+          name: "",
           amounts: [],
         });
       }
@@ -37,10 +55,19 @@ export default function Home() {
   };
 
   const handleClick = () => {
-    const [first, last] = command.split(":");
-    const order = parseInt(first);
-    const amount = parseInt(last);
+    if (!command) {
+      return;
+    }
+
+    let [strOrder, strAmount, strSide, strName] = command.split(":");
+    const order = parseInt(strOrder);
+    const amount = parseInt(strAmount);
+    const side = strSide?.toUpperCase();
     const amounts = data[order - 1]?.amounts || [];
+
+    const name = strName ? strName.trim() : undefined;
+    const amountType =
+      side === "D" || side === "X" ? AmountType.Bet : AmountType.Normal;
 
     if (!order || order <= 0 || order > MAX_CARDS || !amount) {
       alert("Đã xảy ra lỗi, vui lòng thử lại");
@@ -48,13 +75,23 @@ export default function Home() {
       return;
     }
 
-    const newData: any = [];
+    const newData: ICard[] = [];
 
-    data.forEach((x: any) => {
-      if (x.order !== order) {
-        newData.push(x);
+    data.forEach((card) => {
+      if (card.order !== order) {
+        newData.push(card);
       } else {
-        const newCard = { order, amounts: [amount].concat(amounts) };
+        const newAmount: IAmount = {
+          type: amountType,
+          value: amount,
+          side: amountType === AmountType.Bet ? side : undefined,
+        };
+
+        const newCard = {
+          name: name ? name : card.name,
+          order,
+          amounts: [newAmount].concat(amounts),
+        };
         newData.push(newCard);
       }
     });
@@ -102,8 +139,8 @@ export default function Home() {
       </div>
 
       <div className="flex flex-grow space-x-2 overflow-x-scroll px-1">
-        {data.map((x: any) => (
-          <Card key={x.order} {...x} />
+        {data.map((card) => (
+          <Card key={card.order} {...card} />
         ))}
       </div>
     </div>
@@ -112,14 +149,19 @@ export default function Home() {
 
 const Card = ({
   amounts,
-  order
+  order,
+  name,
 }: {
-  amounts: number[];
+  amounts: IAmount[];
   order: number;
-  cardRef: any;
+  name: string;
 }) => {
   return (
-    <div className="card flex flex-col flex-shrink-0 w-14 py-20 mx-2" id={`card-${order}`}>
+    <div
+      className="card flex flex-col flex-shrink-0 w-14 py-20 mx-2"
+      id={`card-${order}`}
+    >
+      <span className="block text-sm font-semibold">{name}</span>
       <div className="flex h-10 px-1">
         <span className="block text-sm font-semibold">{order}</span>
         <span className="block ml-2 text-sm font-semibold">
@@ -131,16 +173,34 @@ const Card = ({
         <div className="flex flex-col items-center p-1 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100">
           <h4 className="mt-3 text-sm font-medium">
             {amounts.map((amount, index) => {
+              console.log(amount);
+              if (amount?.type === AmountType.Bet) {
+                return (
+                  <div className="text-gray-400" key={index}>
+                    {amount?.value}
+
+                    <span
+                      className={classNames({
+                        "text-red-500": amount?.side === "D",
+                        "text-green-500": amount?.side === "X",
+                      })}
+                    >
+                      {amount?.side}
+                    </span>
+                  </div>
+                );
+              }
+
               return (
                 <div
                   className={classNames({
-                    "text-green-500": amount > 0,
-                    "text-red-500": amount < 0,
-                    "text-yellow-500": !amount,
+                    "text-green-500": amount?.value > 0,
+                    "text-red-500": amount?.value < 0,
+                    "text-yellow-500": !amount?.value,
                   })}
                   key={index}
                 >
-                  {amount}
+                  {amount?.value}
                 </div>
               );
             })}
@@ -155,8 +215,14 @@ const Card = ({
   );
 };
 
-const SummaryAmount = ({ amounts }: { amounts: any }) => {
-  const sumAmount = amounts.reduce((curr: any, acc: any) => acc + curr, 0);
+const SummaryAmount = ({ amounts }: { amounts: IAmount[] }) => {
+  const sumAmount: number = amounts.reduce((acc: number, curr: IAmount) => {
+    if (curr.type === AmountType.Bet) {
+      return acc;
+    }
+
+    return (curr?.value || 0) + acc;
+  }, 0);
   return (
     <h4
       className={classNames({
