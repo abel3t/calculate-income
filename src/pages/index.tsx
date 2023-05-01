@@ -173,10 +173,9 @@ const Card = ({
         <div className="flex flex-col items-center p-1 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100">
           <h4 className="mt-3 text-sm font-medium">
             {amounts.map((amount, index) => {
-              console.log(amount);
               if (amount?.type === AmountType.Bet) {
                 return (
-                  <div className="text-gray-400" key={index}>
+                  <div className="text-gray-500" key={index}>
                     {amount?.value}
 
                     <span
@@ -195,8 +194,7 @@ const Card = ({
                 <div
                   className={classNames({
                     "text-green-500": amount?.value > 0,
-                    "text-red-500": amount?.value < 0,
-                    "text-yellow-500": !amount?.value,
+                    "text-red-500": amount?.value < 0
                   })}
                   key={index}
                 >
