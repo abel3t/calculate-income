@@ -1,6 +1,16 @@
 import { useEffect, useState } from "react";
 import classNames from "classnames";
 
+enum SideType {
+  Red,
+  Green,
+}
+
+const SideText = {
+  [SideType.Red]: "Đ",
+  [SideType.Green]: "X",
+};
+
 enum AmountType {
   Normal,
   Bet,
@@ -8,7 +18,7 @@ enum AmountType {
 
 interface IAmount {
   type: AmountType;
-  side?: string | undefined;
+  side?: SideType | undefined;
   value: number;
 }
 
@@ -62,12 +72,22 @@ export default function Home() {
     let [strOrder, strAmount, strSide, strName] = command.split(":");
     const order = parseInt(strOrder);
     const amount = parseInt(strAmount);
-    const side = strSide?.toUpperCase();
+    const name = strName ? strName.trim() : undefined;
     const amounts = data[order - 1]?.amounts || [];
 
-    const name = strName ? strName.trim() : undefined;
+    strSide = strSide?.toUpperCase();
+
     const amountType =
-      side === "D" || side === "X" ? AmountType.Bet : AmountType.Normal;
+      strSide === "D" || strSide === "X" ? AmountType.Bet : AmountType.Normal;
+
+    let side: SideType;
+    if (strSide === "D") {
+      side = SideType.Red;
+    }
+
+    if (strSide === "X") {
+      side = SideType.Green;
+    }
 
     if (!order || order <= 0 || order > MAX_CARDS || !amount) {
       alert("Đã xảy ra lỗi, vui lòng thử lại");
@@ -84,7 +104,7 @@ export default function Home() {
         const newAmount: IAmount = {
           type: amountType,
           value: amount,
-          side: amountType === AmountType.Bet ? side : undefined,
+          side,
         };
 
         const newCard = {
@@ -108,11 +128,47 @@ export default function Home() {
     setCommand("");
   };
 
+  const handleVictory = (side: SideType) => {
+    const confirmed = confirm("Bạn đã chắc chắn chưa?");
+
+    if (!confirmed) {
+      return;
+    }
+
+    const newData: ICard[] = [];
+
+    data.forEach((card) => {
+      const amount = card.amounts?.[0];
+
+      if (amount?.type !== AmountType.Bet) {
+        newData.push(card);
+        return;
+      }
+
+      const value =
+        amount?.side === side ? -1 * amount.value * 0.9 : amount.value;
+
+      const newAmount: IAmount = {
+        type: AmountType.Normal,
+        value,
+      };
+
+      const newCard = {
+        ...card,
+        amounts: [newAmount].concat(card.amounts),
+      };
+      newData.push(newCard);
+    });
+
+    localStorage.setItem("data", JSON.stringify(newData));
+    setData(newData);
+  };
+
   return (
     <div className="flex flex-col w-screen text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
-      <div className="fixed flex items-center flex-shrink-0 w-full h-16 px-10 bg-white bg-opacity-75">
+      <div className="fixed flex items-center flex-shrink-0 w-full h-16 px-2 bg-white bg-opacity-75">
         <input
-          className="flex items-center h-10 w-24 px-4 text-sm bg-gray-200 rounded-lg focus:outline-none focus:ring"
+          className="h-10 w-24 px-4 text-sm bg-gray-200 rounded-lg focus:outline-none focus:ring"
           type="search"
           placeholder="1:100"
           autoFocus={true}
@@ -127,6 +183,22 @@ export default function Home() {
           onClick={handleClick}
         >
           Ok
+        </button>
+
+        <button
+          type="button"
+          className="ml-3 bg-red-400 px-2 py-1 border rounded-md"
+          onClick={() => handleVictory(SideType.Red)}
+        >
+          Đỏ
+        </button>
+
+        <button
+          type="button"
+          className="ml-3 bg-green-400 px-2 py-1 border rounded-md"
+          onClick={() => handleVictory(SideType.Green)}
+        >
+          Xanh
         </button>
 
         <button
@@ -180,11 +252,11 @@ const Card = ({
 
                     <span
                       className={classNames({
-                        "text-red-500": amount?.side === "D",
-                        "text-green-500": amount?.side === "X",
+                        "text-red-500": amount?.side === SideType.Red,
+                        "text-green-500": amount?.side === SideType.Green,
                       })}
                     >
-                      {amount?.side}
+                      {amount?.side !== undefined && SideText[amount?.side]}
                     </span>
                   </div>
                 );
@@ -194,7 +266,7 @@ const Card = ({
                 <div
                   className={classNames({
                     "text-green-500": amount?.value > 0,
-                    "text-red-500": amount?.value < 0
+                    "text-red-500": amount?.value < 0,
                   })}
                   key={index}
                 >
