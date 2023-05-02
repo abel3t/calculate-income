@@ -176,13 +176,7 @@ export default function Home() {
           onKeyDown={handlePresKey}
         />
 
-        <button
-          type="button"
-          className="ml-3 bg-blue-400 px-2 py-1 border rounded-md"
-          onClick={handleClick}
-        >
-          Ok
-        </button>
+ 
 
         <button
           type="button"
